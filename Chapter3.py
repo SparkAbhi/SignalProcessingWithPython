@@ -94,13 +94,11 @@ wc32_normalised = wc32/nyquistFrequency
 b3,a3 = scipySignal.butter(4,[wc31_normalised,wc32_normalised],btype='bandpass')
 w3,h3 = scipySignal.freqz(b3,a3)
 
-"""
-# plot frequency response
+
 o3 = oscilloscope(title='filter response',isFreqResponsePlotAlso="yes")
 o3.addFrequencyResponse(w1,h1,wc=wc11,frequencyResponseColor='C0',label='filter 1')
 o3.addFrequencyResponse(w2,h2,wc=[wc21,wc22],frequencyResponseColor='C1',label='filter2')
 o3.addFrequencyResponse(w3,h3,wc=[wc31,wc32],frequencyResponseColor='C2',label='filter3')
-"""
 
 # filter noisy data s_sampled
 s_filter1 = copy(s_sampled)
