@@ -49,7 +49,7 @@ fftPoints = copy(scipyFFT.fft(s3.value,n=fftLen))
 freq = np.linspace(0,Fs,fftLen,endpoint=False)
 
 o2 = oscilloscope(title="Frequency Response (FFT)",isFreqResponsePlotAlso='yes')
-o2.addFrequencyResponse(freq,fftPoints,wc=Fs/2,freqView='linear',ampView='log',label="signal FFT, analog freq vs amplitude")
+o2.addFrequencyResponse(freq,fftPoints,wc=Fs/2,freqView ='linear',ampView ='linear',label="signal FFT, analog freq vs amplitude")
 
 # filters
 lowPassFilterCutoff = 200
@@ -63,7 +63,7 @@ b,a = scipySignal.butter(4,wc_normalized,btype='low',output='ba',analog=False)
 # plot frequency response of filter
 w,h =  scipySignal.freqz(b,a,worN=fftLen,whole=True)
 w = copy(w*(Fs/(2*np.pi)))
-o2.addFrequencyResponse(w,h,wc=lowPassFilterCutoff ,freqView='linear',ampView='log',frequencyResponseColor='C1',label="filter response, analog freq vs amplitude in db")
+o2.addFrequencyResponse(w,h,wc=lowPassFilterCutoff,frequencyResponseColor='C1',freqView ='linear',ampView ='log',label="filter response, analog freq vs amplitude in db")
 
 # filtering
 filteredFFTAmplitude = np.multiply(fftPoints,h)
@@ -71,6 +71,7 @@ ifftSignal = copy(np.real(scipyFFT.ifft(filteredFFTAmplitude ,fftLen)))
 ifftSignal = copy(ifftSignal[np.arange(0,len(s3.time))])
 
 filteredDiscreteSignal =  signalType(time =s3.time,value = ifftSignal)
+#o1.addWaveform(filteredDiscreteSignal,plotType='discrete',plotColor='C2', plotLabel='Filtered discrete signal')
 
 # reconstruction
 dac = reconstructor()

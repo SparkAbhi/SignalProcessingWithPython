@@ -106,7 +106,6 @@ w3,h3 = scipySignal.freqz(b3,a3,worN=fftLen,whole=True)
 w3_analog = w1*df2afratio
 o2.addFrequencyResponse(w3_analog,h3,wc=[fc31,fc32] ,freqView='linear',ampView='log',frequencyResponseColor='C3',label="filter3 response, analog freq vs amplitude in db")
 
-
 #filtering   of signal1
 filtered_10Hz_FFTAmplitude = np.multiply(fftPoints,h1)
 ifft_10Hz_Signal = copy(np.real(scipyFFT.ifft(filtered_10Hz_FFTAmplitude ,fftLen)))
@@ -121,7 +120,6 @@ ifft_100Hz_Signal = copy(ifft_100Hz_Signal[np.arange(0,len(s_sampled.time))])
 
 filtered_100Hz_DiscreteSignal =  signalType(time =s_sampled.time,value = ifft_100Hz_Signal)
 
-
 #filtering   of signal3
 filtered_1000Hz_FFTAmplitude = np.multiply(fftPoints,h3)
 ifft_1000Hz_Signal = copy(np.real(scipyFFT.ifft(filtered_1000Hz_FFTAmplitude ,fftLen)))
@@ -134,7 +132,6 @@ dac = reconstructor()
 estimatedSignal1 = copy(dac.reconstructSignal(filtered_10Hz_DiscreteSignal,connectFilter='yes',lowPassCutoff=2000))
 estimatedSignal2 = copy(dac.reconstructSignal(filtered_100Hz_DiscreteSignal,connectFilter='yes',lowPassCutoff=2000))
 estimatedSignal3 = copy(dac.reconstructSignal(filtered_1000Hz_DiscreteSignal,connectFilter='yes',lowPassCutoff=2000))
-
 
 # plots filtered signal
 o1.addToSubplot(estimatedSignal1,addToRows=0,addToColumns=1,plotTitle="filtered 10 Hz signal")

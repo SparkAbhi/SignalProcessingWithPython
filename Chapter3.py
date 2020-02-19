@@ -50,15 +50,15 @@ o1 = oscilloscope(title = 'individual signals')
 o1.addWaveform(s_10,plotColor='C0',plotLabel='10Hz signal')
 o1.addWaveform(s_100,plotColor='C1',plotLabel='100Hz signal')
 o1.addWaveform(s_1000,plotColor='C2',plotLabel='1000Hz signal')
+"""
 
 o2 = oscilloscope(title = 'mixed and noisy signal')
 o2.addWaveform(s_add,plotColor='C0',plotLabel='mix signal')
 o2.addWaveform(s,plotColor='C1',plotLabel='noisy mix signal')
 o2.addWaveform(s_sampled,plotType='discrete',plotColor='C2',plotLabel='sampled noisy mix signal')
-"""
 
-# filter design
 """
+# filter design
 filter 1: for 10 hz, cutoff of filter is 30 hz ( low pass filter ) 
 filter 2: for 100 hz cutoff is 70 and 130  (band pass filter )
 filter 3: for  1000 hz cutoff is 900hz and 1100hz( band pass , highpass filter for 1000hz and low pass for noises)
@@ -96,9 +96,11 @@ w3,h3 = scipySignal.freqz(b3,a3)
 
 
 o3 = oscilloscope(title='filter response',isFreqResponsePlotAlso="yes")
-o3.addFrequencyResponse(w1,h1,wc=wc11,frequencyResponseColor='C0',label='filter 1')
-o3.addFrequencyResponse(w2,h2,wc=[wc21,wc22],frequencyResponseColor='C1',label='filter2')
-o3.addFrequencyResponse(w3,h3,wc=[wc31,wc32],frequencyResponseColor='C2',label='filter3')
+o3.addFrequencyResponse(w1,h1,wc=wc11,frequencyResponseColor='C0',label='LPF 30Hz')
+o3.addFrequencyResponse(w2,h2,wc=[wc21,wc22],frequencyResponseColor='C1',label='BPF 70 130')
+o3.addFrequencyResponse(w3,h3,wc=[wc31,wc32],frequencyResponseColor='C2',label='BPF 900 1100')
+
+
 
 # filter noisy data s_sampled
 s_filter1 = copy(s_sampled)
@@ -110,19 +112,25 @@ s_filter2.value = copy(scipySignal.filtfilt(b2,a2,s_sampled.value))
 s_filter3 = copy(s_sampled)
 s_filter3.value = copy(scipySignal.filtfilt(b3,a3,s_sampled.value))
 
+
+
+
+o4 = oscilloscope(title="final estimated signals",isSubPlot='yes')
+o4.createSubplots(noOfRows=2,noOfColumns=2)
+o4.addToSubplot(s_sampled,addToRows=0,addToColumns=0,plotTitle='Sampled signal')
+o4.addToSubplot(s_filter1,plotType='discrete',addToRows=0,addToColumns=1,plotTitle='Filtered 10Hz signal')
+o4.addToSubplot(s_filter2,plotType='discrete',addToRows=1,addToColumns=0,plotTitle='Filtered 100Hz signal')
+o4.addToSubplot(s_filter3,plotType='discrete',addToRows=1,addToColumns=1,plotTitle='Filtered 1000Hz signal')
+
+
 dac = reconstructor()
 estimatedSignal1 = copy(dac.reconstructSignal(s_filter1,connectFilter='yes',lowPassCutoff=2000))
 estimatedSignal2 = copy(dac.reconstructSignal(s_filter2,connectFilter='yes',lowPassCutoff=2000))
 estimatedSignal3 = copy(dac.reconstructSignal(s_filter3,connectFilter='yes',lowPassCutoff=2000))
 
-o4 = oscilloscope(title="final estimated signals",isSubPlot='yes')
-o4.createSubplots(noOfRows=2,noOfColumns=2)
-o4.addToSubplot(s,addToRows=0,addToColumns=0,plotTitle='original signal')
-o4.addToSubplot(estimatedSignal1,addToRows=0,addToColumns=1,plotTitle='estimated 10Hz signal')
-o4.addToSubplot(estimatedSignal2,addToRows=1,addToColumns=0,plotTitle='estimated 100Hz signal')
-o4.addToSubplot(estimatedSignal3,addToRows=1,addToColumns=1,plotTitle='estimated 1000Hz signal')
-
-
-
-
-
+o5 = oscilloscope(title="final estimated signals",isSubPlot='yes')
+o5.createSubplots(noOfRows=2,noOfColumns=2)
+o5.addToSubplot(s,addToRows=0,addToColumns=0,plotTitle='original signal')
+o5.addToSubplot(estimatedSignal1,addToRows=0,addToColumns=1,plotTitle='estimated 10Hz signal')
+o5.addToSubplot(estimatedSignal2,addToRows=1,addToColumns=0,plotTitle='estimated 100Hz signal')
+o5.addToSubplot(estimatedSignal3,addToRows=1,addToColumns=1,plotTitle='estimated 1000Hz signal')

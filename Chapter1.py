@@ -33,7 +33,6 @@ o1.addWaveform(s1,plotColor='C0', plotLabel='S1')
 o1.addWaveform(s2,plotColor='C1', plotLabel='S2')
 o1.addWaveform(s3,plotColor='C2', plotLabel='S3')
 
-
 # task 2, add noise to signal 1
 s4 = copy(f1.addNoise(s1,noiseType='gaussian', parameter1=0,parameter2=0.1))
 s5 = copy(f1.addNoise(s1,noiseType='uniform', parameter1=-0.1,parameter2=0.1))
@@ -43,24 +42,20 @@ o2.addWaveform(s1,plotColor='C0', plotLabel='S1')
 o2.addWaveform(s4,plotColor='C1', plotLabel='gaussian noise added with signal')
 o2.addWaveform(s5,plotColor='C2', plotLabel='uniform noise added with signal')
 
-
 # Task 3, sampling and reconstruction
 
 adc = sampler()
-s6 =  copy(adc.sampleSignal(s1,samplingFrequency=1000))
+s6 =  copy(adc.sampleSignal(s4,samplingFrequency=1000))
 
 o3=oscilloscope(title='Signal sampling and reconstruction Visualisation')
-o3.addWaveform(s1,plotType='continious',plotColor='C0', plotLabel='original signal')
+o3.addWaveform(s4,plotType='continious',plotColor='C0', plotLabel='original Noisy signal')
 o3.addWaveform(s6,plotType='discrete',plotColor='C2',plotLabel='sampled signal')
-
 
 dac  =  reconstructor()
 s7= copy(dac.reconstructSignal(s6))
 s8 = copy(dac.reconstructSignal(s6,connectFilter='yes',lowPassCutoff=200))
 
 o3.addWaveform(s7,plotType='continious',plotColor='C3', plotLabel='reconstructed signal without filter')
-
-
 o3.addWaveform(s8,plotType='continious',plotColor='C4', plotLabel='reconstructed signal with low pass filter')
 
 sys.exit('Break program here')

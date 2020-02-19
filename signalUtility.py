@@ -137,8 +137,8 @@ class oscilloscope(object):
         self.__frequencyResponse = plt.figure(figsize=(10,4))
         self.__frequencyResponse.canvas.set_window_title('frequency response')
         self.__axesf = self.__frequencyResponse.add_axes([0.1,0.1,0.8,0.8])
-        self.__axesf.set_xlabel('w( 0 to pi)')
-        self.__axesf.set_ylabel('filter gain in db')
+        self.__axesf.set_xlabel('Frequency')
+        self.__axesf.set_ylabel('Amplitude')
         self.__axesf.grid(which='both',axis='both')
         self.__axesf.margins(0,0.1)
         self.__xticks=[]
@@ -157,8 +157,15 @@ class oscilloscope(object):
         self.__fig1.show()
         
         
-    def addFrequencyResponse(self,w,h,wc,frequencyResponseColor='C0',label='frequencyResponse'):
-        self.__axesf.semilogx(w,20*np.log10(abs(h)),color=frequencyResponseColor,label=label)
+    def addFrequencyResponse(self,w,h,wc,frequencyResponseColor='C0',freqView='log',ampView='log',label='frequencyResponse'):
+        if(freqView =='linear' and ampView =='log'):
+            self.__axesf.plot(w,20*np.log10(abs(h)),color=frequencyResponseColor,label=label)
+        elif(freqView =='linear' and ampView =='linear'):
+            self.__axesf.plot(w,abs(h),color=frequencyResponseColor,label=label)
+        elif(freqView =='log' and ampView =='linear'):
+            self.__axesf.semilogx(w,abs(h),color=frequencyResponseColor,label=label)
+        else:
+            self.__axesf.semilogx(w,20*np.log10(abs(h)),color=frequencyResponseColor,label=label)
         
         if(isinstance(wc,list)):
             for wci in wc:

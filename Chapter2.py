@@ -59,6 +59,7 @@ b,a = scipySignal.butter(4,wc_normalized,btype='low',output='ba',analog=False)
 w,h =  scipySignal.freqz(b,a)
 o2 = oscilloscope(title='frequencyresponse',isFreqResponsePlotAlso='yes')
 o2.addFrequencyResponse(w,h,wc)
+
 #******************************************************************************
 # filtering of sampled data, filter will filter only values
 s4 = copy(s3)
@@ -79,5 +80,7 @@ o3 = oscilloscope('filter performance')
 o3.addWaveform(s1,plotColor='C0', plotLabel='Original Signal')
 o3.addWaveform(s2,plotColor='C1', plotLabel='Noisy signal')
 o3.addWaveform(s6,plotColor='C5', plotLabel='analog filtered reconstructed signal')
+
+sys.exit('Break program here')
 
 

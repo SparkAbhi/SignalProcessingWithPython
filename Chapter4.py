@@ -51,7 +51,6 @@ o1 = oscilloscope(title="Fourier analysis ",isSubPlot='yes')
 o1.createSubplots(noOfRows=2,noOfColumns=2)
 o1.addToSubplot(s_add,addToRows=0,addToColumns=0,plotTitle='Signals', plotColor='C0')
 o1.addToSubplot(s_add,addToRows=0,addToColumns=1,plotTitle='Sampled Signals', plotType='discrete', plotColor='C0')
-
 #FFT calculation
 signalLen = len(s_sampled.time)
 fftLen=(int)(pow(2,np.ceil(np.log2(signalLen))))
@@ -61,7 +60,6 @@ fftPoints = copy(scipyFFT.fft(s_sampled.value,n=fftLen))
 freq = np.linspace(0,Fs,fftLen,endpoint=True);
 fftSignal = signalType(freq[np.arange(0,fftLen/2,1,dtype=int)],20*np.log10(abs(fftPoints[np.arange(0,fftLen/2,1,dtype=int)])))
 o1.addToSubplot(fftSignal,addToRows=1,addToColumns=0,plotTitle='signal FFT', plotColor='C0',xlabel="frequency(Hz)",ylabel="FFT values")
-
 
 ifftSignalvalue = copy(scipyFFT.ifft(fftPoints,n=fftLen))
 ifftSignalvalue = copy(ifftSignalvalue[np.arange(0,signalLen,1,dtype=int)])
